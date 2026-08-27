@@ -40,11 +40,11 @@ const submitTracking = async () => {
     }
 };
 </script>
-    
-    
-    
-    
-    
+
+
+
+
+
 <template>
     <Head title="Welcome" />
 
@@ -135,7 +135,7 @@ const submitTracking = async () => {
 
                 <div>
                     <h3 class="text-2xl font-bold text-gray-900">
-                        Engr. Melindo B. Tala
+                        Engr. Gilvert C. Maglinte
                     </h3>
                     <p class="text-[#facc15] text-lg font-semibold">
                         Department Head
@@ -153,7 +153,7 @@ const submitTracking = async () => {
         </footer>
     </div>
 </template>
-    
+
     <style>
     @keyframes fadeInUp {
         from {
@@ -169,4 +169,3 @@ const submitTracking = async () => {
         animation: fadeInUp 1s ease-out;
     }
     </style>
-    

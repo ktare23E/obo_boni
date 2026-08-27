@@ -62,7 +62,7 @@ const user = usePage().props.auth?.user;
                 </div>
 
                 <div>
-                    <h3 class="text-2xl font-bold text-gray-900">Engr. Melindo B. Tala</h3>
+                    <h3 class="text-2xl font-bold text-gray-900">Engr. Gilvert C. Maglinte</h3>
                     <p class="text-[#facc15] text-lg font-semibold">Department Head</p>
                     <p class="mt-3 text-gray-600 max-w-2xl">
                         Under the Office of the Building Official, Engr. Tala ensures compliance with safety and
