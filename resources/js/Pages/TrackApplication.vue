@@ -127,7 +127,7 @@ const submitTracking = async () => {
             <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
                 <div class="w-48 h-48 rounded-full overflow-hidden shadow-md border-4 border-[#facc15]">
                     <img
-                        src="/imgs/melindo_tala.jpg"
+                        src="/imgs/boni_head.jpg"
                         alt="Engr. Melindo B. Tala"
                         class="object-cover w-full h-full"
                     />

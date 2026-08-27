@@ -55,7 +55,7 @@ const user = usePage().props.auth?.user;
             <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
                 <div class="w-48 h-48 rounded-full overflow-hidden shadow-md border-4 border-[#facc15]">
                     <img
-                        src="/imgs/melindo_tala.jpg"
+                        src="/imgs/boni_head.jpg"
                         alt="Engr. Melindo B. Tala"
                         class="object-cover w-full h-full"
                     />
@@ -65,7 +65,7 @@ const user = usePage().props.auth?.user;
                     <h3 class="text-2xl font-bold text-gray-900">Engr. Gilvert C. Maglinte</h3>
                     <p class="text-[#facc15] text-lg font-semibold">Department Head</p>
                     <p class="mt-3 text-gray-600 max-w-2xl">
-                        Under the Office of the Building Official, Engr. Tala ensures compliance with safety and
+                        Under the Office of the Building Official, Engr. Maglinte ensures compliance with safety and
                         structural standards across all city constructions, promoting efficient and transparent public service.
                     </p>
                 </div>
