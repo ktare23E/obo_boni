@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="icon" type="image/x-icon" href="/imgs/obo.jpeg">
+    <link rel="icon" type="image/x-icon" href="/imgs/boni_logo.jpg">
 
     {{-- datatables --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

@@ -15,7 +15,7 @@ const logout = () => router.post(route('logout'));
                bg-white/30 backdrop-blur-md flex justify-between items-center shadow-sm border-b border-white/20">
         <!-- Logo -->
         <div class="flex items-center gap-2">
-            <img src="/imgs/obo.jpeg" alt="Logo" class="w-12 rounded-full" />
+            <img src="/imgs/boni_logo.jpg" alt="Logo" class="w-12 rounded-full" />
             <h1 class="text-xl font-semibold text-black drop-shadow">
                 <span class="text-[#facc15]">OBO</span> Online Permit System
             </h1>
@@ -28,10 +28,10 @@ const logout = () => router.post(route('logout'));
             </li> -->
             <Link :href="route('welcome')" class="cursor-pointer hover:text-[#facc15] transition-colors">Home</Link>
             <Link :href="route('track_application')" class="cursor-pointer hover:text-[#facc15] transition-colors">Track Application</Link>
-<!--         
+<!--
             <li class="cursor-pointer hover:text-[#facc15] transition-colors">About</li>
             <li class="cursor-pointer hover:text-[#facc15] transition-colors">Contact</li> -->
-         
+
             <li v-if="user" class="cursor-pointer hover:text-[#facc15] transition-colors">
                 <Link :href="route('buildings.index')">My Buildings</Link>
             </li>
