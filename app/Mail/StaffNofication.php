@@ -29,7 +29,7 @@ class StaffNofication extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('agtaaljansolatorio@gmail.com','Online Building Permit Application System'),
+            from: new Address('revillizab@gmail.com','Online Building Permit Application System'),
             subject: 'Staff Nofication',
         );
     }

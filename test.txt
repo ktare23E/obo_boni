@@ -50,10 +50,10 @@ REDIS_PORT=6379
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
-MAIL_USERNAME=agtaaljansolatorio@gmail.com
+MAIL_USERNAME=revillizab@gmail.com
 MAIL_PASSWORD=vraktgszluetoemh
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=agtaaljansolatorio@gmail.com
+MAIL_FROM_ADDRESS=revillizab@gmail.com
 MAIL_FROM_NAME="Building Permit"
 
 AWS_ACCESS_KEY_ID=

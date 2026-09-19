@@ -29,8 +29,8 @@ class ClientNotification extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(      
-            from: new Address('agtaaljansolatorio@gmail.com','Online Building Permit Application System'),
+        return new Envelope(
+            from: new Address('revillizab@gmail.com','Online Building Permit Application System'),
             subject: 'Client Notification',
         );
     }
