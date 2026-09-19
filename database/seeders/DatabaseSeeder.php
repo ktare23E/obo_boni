@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Palantang',
             'user_type' => 'Admin',
             'status' => 'Active',
-            'email' => 'edselpaler85@gmail.com',
+            'email' => 'revillizab@gmail.com',
         ]);
     }
 }
