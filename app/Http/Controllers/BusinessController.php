@@ -55,12 +55,12 @@ class BusinessController extends Controller
             'files.*'           => 'array',
             'files.*.*'         => 'file',
         ]);
-    
+
         $user = Auth::user();
 
         //create reference number
         $registration_no = 'BUILD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
-    
+
         // 1) Create business
         $business = Business::create([
             'registration_no' => $registration_no,
@@ -78,10 +78,10 @@ class BusinessController extends Controller
             'status' => 'Under Review of Admin',
             'remarks' => 'Under Review of Admim/Staff'
         ]);
-    
+
         // 2) Save *temporary* files and push to queue
         $tempFiles = [];
-    
+
         foreach ($request->allFiles()['files'] ?? [] as $reqId => $group) {
             foreach ($group as $file) {
                 $tempFiles[] = [
@@ -92,6 +92,7 @@ class BusinessController extends Controller
         }
 
         // 3) Dispatch job (async processing)
+        // need ni sya bag -ohon
         ProcessBusinessUploads::dispatch($business->id, $tempFiles);
 
         $details = [
@@ -100,7 +101,7 @@ class BusinessController extends Controller
         ];
 
         Mail::to($user->email)->send(new StaffNofication($details));
-    
+
         // 4) Return immediately (fast, no timeout)
         return back()->with('success', 'Application submitted! Files are being processed.');
     }
