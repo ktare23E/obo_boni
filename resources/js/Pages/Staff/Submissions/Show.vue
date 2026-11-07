@@ -4,21 +4,21 @@
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import StaffLayout from '@/Layouts/StaffLayout.vue'
-    
+
     // =======================
     // ✅ FIX LEAFLET ICONS (PRODUCTION)
     // =======================
     import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
     import markerIcon from 'leaflet/dist/images/marker-icon.png'
     import markerShadow from 'leaflet/dist/images/marker-shadow.png'
-    
+
     delete L.Icon.Default.prototype._getIconUrl
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: markerIcon2x,
         iconUrl: markerIcon,
         shadowUrl: markerShadow,
     })
-    
+
     // =======================
     // PROPS
     // =======================
@@ -27,7 +27,7 @@
         submissions: Array,
         hasFutureAvailableSchedule: Boolean,
     })
-    
+
     // =======================
     // HELPERS
     // =======================
@@ -35,24 +35,24 @@
         const ext = filePath.split('.').pop().toLowerCase()
         return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(ext)
     }
-    
+
     // =======================
     // IMAGE MODAL
     // =======================
     const showModal = ref(false)
     const selectedImage = ref('')
-    
+
     const openModal = (filePath) => {
-        selectedImage.value = `/storage/${filePath}`
+        selectedImage.value = `/storage/app/private/${filePath}`
         showModal.value = true
         resetZoom()
     }
-    
+
     const closeModal = () => {
         showModal.value = false
         selectedImage.value = ''
     }
-    
+
     // =======================
     // IMAGE ZOOM + DRAG
     // =======================
@@ -60,32 +60,32 @@
     const pos = ref({ x: 0, y: 0 })
     let isDragging = false
     let start = { x: 0, y: 0 }
-    
+
     const resetZoom = () => {
         scale.value = 1
         pos.value = { x: 0, y: 0 }
     }
-    
+
     const handleWheel = (e) => {
         e.preventDefault()
         const delta = e.deltaY < 0 ? 0.1 : -0.1
         scale.value = Math.min(Math.max(scale.value + delta, 0.5), 3)
     }
-    
+
     const startDrag = (e) => {
         isDragging = true
         start = { x: e.clientX - pos.value.x, y: e.clientY - pos.value.y }
     }
-    
+
     const onDrag = (e) => {
         if (!isDragging) return
         pos.value = { x: e.clientX - start.x, y: e.clientY - start.y }
     }
-    
+
     const endDrag = () => {
         isDragging = false
     }
-    
+
     // =======================
     // APPROVE / REJECT SINGLE
     // =======================
@@ -108,7 +108,7 @@
             }
         })
     }
-    
+
     const reject = (submissionId) => {
         Swal.fire({
             title: 'Decline Submission?',
@@ -131,7 +131,7 @@
             }
         })
     }
-    
+
     // =======================
     // APPROVE ALL
     // =======================
@@ -139,12 +139,12 @@
         const pendingSubmissions = props.submissions.filter(
             (s) => s.status === 'submitted'
         )
-    
+
         if (pendingSubmissions.length === 0) {
             Swal.fire('Nothing to Approve', 'All submissions are already processed.', 'info')
             return
         }
-    
+
         Swal.fire({
             title: 'Approve All Submissions?',
             text: `Approve all ${pendingSubmissions.length} submitted requirements?`,
@@ -156,16 +156,16 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 const submissionIds = pendingSubmissions.map((s) => s.id)
-    
+
                 router.post(route('submissions.approveAll'), { ids: submissionIds }, {
                     onSuccess: () => {
                         Swal.fire('Approved!', 'All submissions have been approved.', 'success')
-    
+
                         submissionIds.forEach((id) => {
                             const sub = props.submissions.find((s) => s.id === id)
                             if (sub) sub.status = 'approved'
                         })
-    
+
                         props.business.status = 'Approved'
                     },
                     onError: () => {
@@ -175,13 +175,13 @@
             }
         })
     }
-    
+
     // =======================
     // LEAFLET MAP
     // =======================
     const mapContainer = ref(null)
     let mapInstance = null
-    
+
     onMounted(() => {
         if (
             mapContainer.value &&
@@ -192,30 +192,30 @@
                 mapInstance.remove()
                 mapInstance = null
             }
-    
+
             mapInstance = L.map(mapContainer.value).setView(
                 [props.business.lat, props.business.lng],
                 16
             )
-    
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors',
             }).addTo(mapInstance)
-    
+
             L.marker([props.business.lat, props.business.lng])
                 .addTo(mapInstance)
                 .bindPopup(
                     `<b>${props.business.business_name}</b><br>${props.business.address}`
                 )
                 .openPopup()
-    
+
             // ✅ IMPORTANT for Inertia / layouts
             setTimeout(() => {
                 mapInstance.invalidateSize()
             }, 300)
         }
     })
-    
+
     onBeforeUnmount(() => {
         if (mapInstance) {
             mapInstance.remove()
@@ -223,17 +223,17 @@
         }
     })
     </script>
-    
-    
+
+
     <template>
     <Head title="Requirement Submissions" />
     <StaffLayout :title="'Requirement Submissions'">
         <Link :href="route('submissions')" class="bg-black py-2 px-3 text-white rounded-full">back</Link>
-    
+
         <!-- Business Info -->
         <div class="bg-white rounded-lg shadow p-6 mt-4 flex justify-between items-start">
             <div class="flex items-center space-x-6">
-                <img :src="`/storage/${business.image_path}`"
+                <img :src="`/storage/app/public/${business.image_path}`"
                      class="w-24 h-24 object-cover rounded-lg shadow-md cursor-pointer hover:opacity-80 transition"
                      @click="openModal(business.image_path)"
                      @contextmenu.prevent
@@ -255,7 +255,7 @@
                     </p>
                 </div>
             </div>
-    
+
             <div>
                 <button
                         v-if="props.business.status === 'Under Review of Admin'"
@@ -274,13 +274,13 @@
                     </p>
             </div>
         </div>
-    
+
         <!-- Map -->
         <div class="bg-white rounded-lg shadow p-6 mt-6">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Building Location</h3>
             <div ref="mapContainer" class="w-full h-64 rounded-lg"></div>
         </div>
-    
+
         <!-- Submissions Table -->
         <div class="bg-white rounded-lg shadow p-6 mt-6">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Submitted Requirements</h3>
@@ -303,7 +303,7 @@
                     <td class="px-4 py-2">{{ submission.requirement.requirement_type }}</td>
                     <td class="px-4 py-2">
                         <div v-if="isImage(submission.file_path)">
-                            <img :src="`/storage/${submission.file_path}`"
+                            <img :src="`/storage/app/public/${submission.file_path}`"
                                  class="w-20 h-20 object-cover rounded border cursor-pointer hover:opacity-80 transition"
                                  @click="openModal(submission.file_path)"
                                  @contextmenu.prevent
@@ -354,20 +354,20 @@
                 </tr>
                 </tbody>
             </table>
-    
+
             <div v-if="submissions.length === 0" class="text-center py-8 text-gray-500">
                 No submissions found for this building.
             </div>
         </div>
-    
+
         <!-- IMAGE MODAL -->
         <transition name="fade">
             <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]"
                  @click.self="closeModal">
-    
+
                 <div class="bg-white rounded-lg p-4 relative max-w-3xl w-full overflow-hidden">
                     <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" @click="closeModal">✕</button>
-    
+
                     <div class="relative overflow-hidden cursor-grab active:cursor-grabbing" style="height: 80vh;"
                          @wheel.prevent="handleWheel" @mousedown="startDrag" @mousemove="onDrag" @mouseup="endDrag"
                          @mouseleave="endDrag">
@@ -379,7 +379,7 @@
                                  transition: isDragging ? 'none' : 'transform 0.1s ease',
                              }"
                         />
-    
+
                         <button class="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 text-xs rounded"
                                 @click.stop="resetZoom">
                             Reset Zoom
@@ -390,7 +390,7 @@
         </transition>
     </StaffLayout>
     </template>
-    
+
     <style scoped>
     .fade-enter-active,
     .fade-leave-active {
@@ -401,4 +401,3 @@
         opacity: 0;
     }
     </style>
-    

@@ -16,7 +16,7 @@ const props = defineProps({
 
 // Computed for building image
 const imageUrl = computed(() =>
-    props.building.image_path ? `/storage/${props.building.image_path}` : 'https://via.placeholder.com/600x400?text=No+Image'
+    props.building.image_path ? `/storage/app/public/${props.building.image_path}` : 'https://via.placeholder.com/600x400?text=No+Image'
 );
 
 // Form for re-upload
@@ -62,7 +62,7 @@ function closeModal() {
     selectedImage.value = null;
 }
 </script>
-    
+
 <template>
 
     <Head :title="`${building.business_name} | Building Details`" />
@@ -183,15 +183,15 @@ function closeModal() {
                         <!-- File Preview -->
                         <div class="mt-4 md:mt-0 md:ml-6">
                             <template v-if="submission.requirement.file_type_allowed === 'image'">
-                                <img :src="`/storage/${submission.file_path}`"
+                                <img :src="`/storage/app/public/${submission.file_path}`"
                                         alt="Requirement Image"
                                         class="w-32 h-32 object-cover rounded-lg shadow cursor-pointer"
-                                        @click="openImageModal(`/storage/${submission.file_path}`)"
+                                        @click="openImageModal(`/storage/app/public/${submission.file_path}`)"
                                         @contextmenu.prevent />
                             </template>
 
                             <template v-else>
-                                <a :href="`/storage/${submission.file_path}`" target="_blank"
+                                <a :href="`/storage/app/public/${submission.file_path}`" target="_blank"
                                     class="px-4 py-2 bg-orange-500 text-white rounded-lg shadow hover:opacity-90 transition">
                                     View File
                                 </a>
@@ -224,22 +224,21 @@ function closeModal() {
         </footer>
     </div>
 </template>
-    
+
     <style scoped>
     @keyframes fadeInUp {
         from {
             opacity: 0;
             transform: translateY(20px);
         }
-    
+
         to {
             opacity: 1;
             transform: translateY(0);
         }
     }
-    
+
     .animate-fadeInUp {
         animation: fadeInUp 1s ease-out;
     }
     </style>
-    

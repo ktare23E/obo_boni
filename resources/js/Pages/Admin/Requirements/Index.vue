@@ -114,7 +114,7 @@ const previewImage = ref('');
 const zoomed = ref(false);
 
 const openPreview = (imagePath) => {
-    previewImage.value = '/storage/' + imagePath;
+    previewImage.value = '/storage/app/public/' + imagePath;
     showPreview.value = true;
     zoomed.value = false;
 };
@@ -192,19 +192,19 @@ onMounted(() => {
                             <!-- IMAGE -->
                             <div v-if="s.requirement_sample.endsWith('.png') || s.requirement_sample.endsWith('.jpg') || s.requirement_sample.endsWith('.jpeg')"
                                 @click="openPreview(s.requirement_sample)" class="cursor-pointer">
-                                <img :src="'/storage/' + s.requirement_sample"
+                                <img :src="'/storage/app/public/' + s.requirement_sample"
                                     class="w-full rounded border object-contain max-h-60 hover:scale-105 transition-transform duration-200" />
                             </div>
                             <!-- PDF -->
                             <div v-else-if="s.requirement_sample.endsWith('.pdf')" class="text-center">
-                                <a :href="'/storage/' + s.requirement_sample" target="_blank"
+                                <a :href="'/storage/app/public/' + s.requirement_sample" target="_blank"
                                     class="text-blue-600 underline">
                                     View PDF
                                 </a>
                             </div>
                             <!-- DOCX -->
                             <div v-else class="text-center">
-                                <a :href="'/storage/' + s.requirement_sample" target="_blank"
+                                <a :href="'/storage/app/public/' + s.requirement_sample" target="_blank"
                                     class="text-blue-600 underline">
                                     Open File
                                 </a>

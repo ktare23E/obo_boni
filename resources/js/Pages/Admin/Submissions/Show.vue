@@ -202,18 +202,18 @@ onMounted(() => {
     }
 })
 </script>
-    
-    
+
+
     <template>
     <Head title="Requirement Submissions" />
     <AdminLayout :title="'Requirement Submissions'">
         <Link :href="route('submissions')" class="bg-black py-2 px-3 text-white rounded-full">back</Link>
-    
+
         <!-- Business Info -->
         <div class="bg-white rounded-lg shadow p-6 mt-4">
             <div class="flex justify-between items-start">
                 <div class="flex items-center space-x-6">
-                    <img :src="`/storage/${business.image_path}`" alt="Business Image"
+                    <img :src="`/storage/app/public/${business.image_path}`" alt="Business Image"
                         class="w-24 h-24 object-cover rounded-lg shadow-md cursor-pointer hover:opacity-80 transition"
                         @click="openModal(business.image_path)" />
                     <div>
@@ -253,13 +253,13 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    
+
         <!-- Business Map -->
         <div class="bg-white rounded-lg shadow p-6 mt-6">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Building Location</h3>
             <div ref="mapContainer" class="w-full h-64 rounded-lg"></div>
         </div>
-    
+
         <!-- Submissions Table -->
         <div class="bg-white rounded-lg shadow p-6 mt-6">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Submitted Requirements</h3>
@@ -282,7 +282,7 @@ onMounted(() => {
                         <td class="px-4 py-2">{{ submission.requirement.requirement_type }}</td>
                         <td class="px-4 py-2">
                             <div v-if="isImage(submission.file_path)">
-                                <img :src="`/storage/${submission.file_path}`"
+                                <img :src="`/storage/app/public/${submission.file_path}`"
                                     class="w-20 h-20 object-cover rounded border cursor-pointer hover:opacity-80 transition"
                                     @click="openModal(submission.file_path)"
                                     @contextmenu.prevent />
@@ -339,15 +339,15 @@ onMounted(() => {
                 No submissions found for this building.
             </div>
         </div>
-    
+
         <!-- 🖼️ IMAGE MODAL WITH ZOOM + DRAG -->
         <transition name="fade">
             <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]"
                 @click.self="closeModal">
-    
+
                 <div class="bg-white rounded-lg p-4 relative max-w-3xl w-full overflow-hidden">
                     <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" @click="closeModal">✕</button>
-    
+
                     <div class="relative overflow-hidden cursor-grab active:cursor-grabbing" style="height: 80vh;"
                         @wheel.prevent="handleWheel" @mousedown="startDrag" @mousemove="onDrag" @mouseup="endDrag"
                         @mouseleave="endDrag">
@@ -370,7 +370,7 @@ onMounted(() => {
         </transition>
     </AdminLayout>
     </template>
-    
+
     <style scoped>
     .fade-enter-active,
     .fade-leave-active {
@@ -381,4 +381,3 @@ onMounted(() => {
         opacity: 0;
     }
     </style>
-    

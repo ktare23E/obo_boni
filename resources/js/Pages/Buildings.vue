@@ -83,7 +83,7 @@ const filteredBuildings = computed(() => {
                     class="group bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300">
                 <!-- Image -->
                 <div class="relative h-52 overflow-hidden">
-                    <img :src="`/storage/${building.image_path}`" alt="Building Image"
+                    <img :src="`/storage/app/public/${building.image_path}`" alt="Building Image"
                         class="w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500" />
 
                     <!-- Soft Gradient Overlay -->

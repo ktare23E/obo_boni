@@ -180,7 +180,7 @@ const endDrag = () => {
 const previewSample = (sample) => {
 
     sampleToShow.value =
-        `/storage/${sample.requirement_sample}`;
+        `/storage/app/public/${sample.requirement_sample}`;
 
     showModal.value = true;
 
