@@ -45,11 +45,11 @@ class BusinessController extends Controller
         $validated = $request->validate([
             'business_name'     => 'required|string|max:255',
             'address'           => 'required|string|max:255',
-            'lat'           => 'required|string|max:255',
-            'lng'           => 'required|string|max:255',
-            'place_description'           => 'required|string|max:255',
+            'lat'               => 'required|string|max:255',
+            'lng'               => 'required|string|max:255',
+            'place_description' => 'required|string|max:255',
             'type_of_business'  => 'required|string|max:255',
-            'building_type'  => 'required|string|max:255',
+            'building_type'     => 'required|string|max:255',
             'image_path'        => 'nullable|file|mimes:jpg,jpeg,png',
             'files'             => 'required|array',
             'files.*'           => 'array',
@@ -58,52 +58,57 @@ class BusinessController extends Controller
 
         $user = Auth::user();
 
-        //create reference number
+        // Create reference number
         $registration_no = 'BUILD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
-        // 1) Create business
+        // 1. Create business
         $business = Business::create([
-            'registration_no' => $registration_no,
-            'business_name'   => $validated['business_name'],
-            'user_id'         => $user->id,
-            'address'         => $validated['address'],
-            'lat'         => $validated['lat'],
-            'lng'         => $validated['lng'],
-            'place_description'         => $validated['place_description'],
-            'type_of_business'=> $validated['type_of_business'],
-            'building_type'=> $validated['building_type'],
-            'image_path'      => $request->file('image_path')
+            'registration_no'  => $registration_no,
+            'business_name'    => $validated['business_name'],
+            'user_id'          => $user->id,
+            'address'          => $validated['address'],
+            'lat'              => $validated['lat'],
+            'lng'              => $validated['lng'],
+            'place_description'=> $validated['place_description'],
+            'type_of_business' => $validated['type_of_business'],
+            'building_type'    => $validated['building_type'],
+            'image_path'       => $request->hasFile('image_path')
                 ? $request->file('image_path')->store('buildings_temp', 'public')
                 : null,
-            'status' => 'Under Review of Admin',
-            'remarks' => 'Under Review of Admim/Staff'
+            'status'           => 'Under Review of Admin',
+            'remarks'          => 'Under Review of Admim/Staff',
         ]);
 
-        // 2) Save *temporary* files and push to queue
-        $tempFiles = [];
-
+        // 2. Directly save submitted requirement files
         foreach ($request->allFiles()['files'] ?? [] as $reqId => $group) {
+
             foreach ($group as $file) {
-                $tempFiles[] = [
+
+                // Store uploaded file in public storage
+                $filePath = $file->store('requirement_submissions', 'public');
+
+                // Create submission record
+                $business->submissions()->create([
                     'requirement_id' => $reqId,
-                    'temp_path'      => $file->store('temp_uploads', 'public'),
-                ];
+                    'file_path'      => $filePath,
+                    'status'         => 'submitted',
+                ]);
             }
         }
 
-        // 3) Dispatch job (async processing)
-        // need ni sya bag -ohon
-        ProcessBusinessUploads::dispatch($business->id, $tempFiles);
-
+        // 3. Send email notification
         $details = [
             'title' => 'Building Reference',
-            'body' => "This is your reference number ".$registration_no.', use this to tracking your building application.'
+            'body'  => "This is your reference number {$registration_no}, use this to track your building application."
         ];
 
         Mail::to($user->email)->send(new StaffNofication($details));
 
-        // 4) Return immediately (fast, no timeout)
-        return back()->with('success', 'Application submitted! Files are being processed.');
+        // 4. Return response
+        return back()->with(
+            'success',
+            'Application submitted successfully!'
+        );
     }
 
 

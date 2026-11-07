@@ -56,7 +56,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name'  => ['required', 'string', 'max:255'],
@@ -90,7 +90,7 @@ class AuthController extends Controller
             'body' => 'Your OTP is ' .$otpCode
         ];
 
-        Mail::to($user->email)->queue(new ClientNotification($details));
+        Mail::to($user->email)->send(new ClientNotification($details));
 
 
         return redirect()->route('client_otp',[
