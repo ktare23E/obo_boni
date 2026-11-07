@@ -35,7 +35,7 @@ const showModal = ref(false)
 const selectedImage = ref('')
 
 const openModal = (filePath) => {
-    selectedImage.value = `/storage/${filePath}`
+    selectedImage.value = `/storage/app/public/${filePath}`
     showModal.value = true
     resetZoom()
 }
