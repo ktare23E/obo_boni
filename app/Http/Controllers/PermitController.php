@@ -39,7 +39,7 @@ class PermitController extends Controller
             'body'  => 'Your business permit has been processed. You can claim it at the main office on ' . $readableDate . '.'
         ];
 
-        Mail::to($clientEmail)->queue(new ClientNotification($details));
+        Mail::to($clientEmail)->send(new ClientNotification($details));
 
         // Create the permit record using the validated data
         Permit::create($validated);

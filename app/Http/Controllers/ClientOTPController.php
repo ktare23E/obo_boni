@@ -23,9 +23,9 @@ class ClientOTPController extends Controller
     public function otpLogin(Request $request)
     {
         $user = User::findOrFail($request->user_id);
-    
+
         Auth::login($user);
-    
+
         return redirect()->route('welcome');
     }
 
@@ -44,7 +44,7 @@ class ClientOTPController extends Controller
             'body' => 'Your OTP is ' .$newOtp
         ];
 
-        Mail::to($user->email)->queue(new ClientNotification($details));
+        Mail::to($user->email)->send(new ClientNotification($details));
 
 
         // send SMS here

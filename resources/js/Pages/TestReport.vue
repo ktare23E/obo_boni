@@ -5,8 +5,9 @@
     const props = defineProps({ permit: Object })
 
     // Logos
-    const leftLogo = '/imgs/tangubicon.png'
-    const rightLogo = '/imgs/obo.jpeg'
+    const leftLogo = '/imgs/bagong.png'
+    const leftBoni = '/imgs/boni.png'
+    const rightLogo = '/imgs/asenso_boni.jpg'
 
     // Reactive fields
     const permitNumber = ref('')
@@ -21,12 +22,18 @@
     const scopeOfWork = ref('')
     const totalCost = ref('')
     const professionalInCharge = ref('')
-    const buildingOfficial = ref('Melindo B. Tala')
+    const buildingOfficial = ref('Engr. Gilvert C. Maglinte')
 
     // Fill fields from permit object
     const fillPermitInfo = () => {
         permitNumber.value = props.permit.permit_number || ''
-        dateIssued.value = props.permit.release_date || ''
+        dateIssued.value = props.permit.release_date
+            ? new Date(props.permit.release_date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            })
+            : '';
         fsecNo.value = props.permit.fsec_no || ''
         receiptNo.value = props.permit.receipt_no || ''
         datePaid.value = props.permit.date_paid || ''
@@ -62,7 +69,10 @@
         <div id="permitContent" class="border-2 border-black p-4 w-full max-w-6xl bg-white">
             <!-- Header -->
             <div class="flex justify-between items-center mb-2">
-                <!-- <img :src="leftLogo" class="h-16" /> -->
+                <div class="flex gap-2 items-center">
+                    <img :src="leftLogo" class="h-16" />
+                    <img :src="leftBoni" class="h-16" />
+                </div>
                 <div class="text-center">
                     <p class="text-sm">Republic of the Philippines</p>
                     <p class="text-sm">City/Municipality of Tangub</p>
@@ -82,7 +92,7 @@
                         </label>
                     </div>
                 </div>
-                <!-- <img :src="rightLogo" class="h-16" /> -->
+                <img :src="rightLogo" class="h-16" />
             </div>
 
             <!-- Permit Info -->
@@ -99,6 +109,10 @@
                     <label class="block">
                         <span class="font-bold">FSEC No:</span>
                         <input v-model="fsecNo" class="underline-input" />
+                    </label>
+                    <label class="block">
+                        <span class="font-bold">Date Issued:</span>
+                        <input v-model="dateIssued" class="underline-input" />
                     </label>
                 </div>
                 <div class="space-y-1">
