@@ -127,18 +127,18 @@ const create = () => {
 
 
                 <!-- Requirement Sample (Multiple File Uploads) -->
+                <!-- Requirement Sample (Optional Multiple File Uploads) -->
                 <div class="col-span-2">
-                    <InputLabel for="requirement_sample" value="Requirement Sample (Multiple Files Allowed)" />
+                    <InputLabel for="requirement_sample"
+                        value="Requirement Sample (Optional - Multiple Files Allowed)" />
 
-                    <!-- Hidden file input OUTSIDE the label -->
                     <input type="file" ref="fileInput" id="requirement_sample" class="hidden" multiple
                         :accept="fileAccept" @change="handleFileUpload" />
 
-                    <!-- The clickable upload box -->
-                    <div @click="openFilePicker" class="flex items-center justify-center w-full p-4 mt-1 border-2 border-dashed
-        border-gray-300 rounded-lg cursor-pointer hover:border-[#0F766E] transition">
+                    <div @click="openFilePicker"
+                        class="flex items-center justify-center w-full p-4 mt-1 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#0F766E] transition">
                         <span class="text-sm text-gray-600">
-                            Click here to upload
+                            Click here to upload (Optional)
                             <span v-if="form.file_type_allowed">
                                 {{ form.file_type_allowed.toUpperCase() }} files
                             </span>
@@ -146,7 +146,6 @@ const create = () => {
                         </span>
                     </div>
 
-                    <!-- Display selected files -->
                     <div v-if="form.requirement_sample.length" class="mt-2 space-y-1">
                         <p v-for="(file, index) in form.requirement_sample" :key="index" class="text-sm text-gray-800">
                             • {{ file.name }}
