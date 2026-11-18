@@ -142,7 +142,7 @@ const user = usePage().props.auth?.user;
                            lg:h-52 lg:w-52"
                 >
                     <img
-                        src="/imgs/boni_head.jpg"
+                        src="/public/imgs/boni_head.jpg"
                         alt="Engr. Gilvert C. Maglinte"
                         class="h-full w-full object-cover"
                         loading="lazy"

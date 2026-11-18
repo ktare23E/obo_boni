@@ -126,7 +126,6 @@ const create = () => {
                 </div>
 
 
-                <!-- Requirement Sample (Multiple File Uploads) -->
                 <!-- Requirement Sample (Optional Multiple File Uploads) -->
                 <div class="col-span-2">
                     <InputLabel for="requirement_sample"

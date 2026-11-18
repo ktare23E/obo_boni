@@ -43,7 +43,7 @@ const logout = () => {
                 @click="closeMenus"
             >
                 <img
-                    src="/imgs/boni_logo.jpg"
+                    src="/public/imgs/boni_logo.jpg"
                     alt="OBO Logo"
                     class="h-10 w-10 shrink-0 rounded-full object-cover sm:h-12 sm:w-12"
                 />

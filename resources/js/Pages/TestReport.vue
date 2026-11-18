@@ -5,10 +5,10 @@
     const props = defineProps({ permit: Object })
 
     // Logos
-    const leftLogo = '/imgs/bagong.png'
-    const leftBoni = '/imgs/boni.png'
-    const rightLogo = '/imgs/asenso_boni.jpg'
-
+    const leftLogo = '/public/imgs/bagong.png'
+    const leftBoni = '/public/imgs/boni.png'
+    const rightLogo = '/public/imgs/asenso_boni.jpg'
+  
     // Reactive fields
     const permitNumber = ref('')
     const dateIssued = ref('')
